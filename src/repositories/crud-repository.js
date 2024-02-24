@@ -7,8 +7,10 @@ class CrudRepository {
     }
 
     async create(data) {
+        console.log(data)
         try {
             const response = await this.model.create(data);
+            console.log(response)
             return response;
         } catch (error) {
             Logger.error('Something went wrong in the Crud repo: create');
@@ -42,7 +44,7 @@ class CrudRepository {
 
     async getAll() {
         try {
-            const response = await this.model.findAll(data);
+            const response = await this.model.findAll();
             return response;
         } catch (error) {
             Logger.error('Something went wrong in the Crud repo: getAll');
