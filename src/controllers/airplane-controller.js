@@ -29,7 +29,7 @@ async function createAirplane(req, res) {
 }
 
 /**
- * POST : /airplanes
+ * GET : /airplanes
  * req-body {}
  */
 
@@ -49,7 +49,7 @@ async function getAirplanes(req, res) {
 }
 
 /**
- * POST : /airplanes/:id 
+ * GET : /airplanes/:id 
  * req-body {}
  */
 
@@ -89,7 +89,7 @@ async function destroyAirplane(req, res) {
 }
 
 /**
- * DELETE : /airplanes/:id
+ * PATCH : /airplanes/:id
  * req-body {capacity: 400}
  */
 
