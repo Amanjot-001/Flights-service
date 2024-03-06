@@ -3,58 +3,38 @@ const { ErrorResponse } = require('../utils/common');
 const AppError = require('../utils/errors/app-errors')
 
 function validateCreateRequest(req, res, next) {
+    let validationErrors = [];
     if (!req.body.flightNumber) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['flightNumber not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('flightNumber not found in incoming request in correct form');
     }
     if (!req.body.airplaneId) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['airplaneId not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('airplaneId not found in incoming request in correct form');
     }
     if (!req.body.departureAirportId) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['departureAirportId not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('departureAirportId not found in incoming request in correct form');
     }
     if (!req.body.arrivalAirportId) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['arrivalAirportId not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('arrivalAirportId not found in incoming request in correct form');
     }
     if (!req.body.arrivalTime) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['arrivalTime not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('arrivalTime not found in incoming request in correct form');
     }
     if (!req.body.departureTime) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['departureTime not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('departureTime not found in incoming request in correct form');
     }
     if (!req.body.price) {
-        ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['price not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
-        return res
-            .status(StatusCodes.BAD_REQUEST)
-            .json(ErrorResponse);
+        validationErrors.push('price not found in incoming request in correct form');
     }
     if (!req.body.totalSeats) {
+        validationErrors.push('totalSeats not found in incoming request in correct form');
+    }
+    if (req.body.departureTime && req.body.arrivalTime) {
+        validationErrors.push('departure time is greater than arrival time');
+    }
+
+    if (validationErrors.length > 0) {
         ErrorResponse.message = 'Something went wrong while creating airport';
-        ErrorResponse.error = new AppError(['totalSeats not found in incoming request in correct form'], StatusCodes.BAD_REQUEST);
+        ErrorResponse.error = new AppError(validationErrors, StatusCodes.BAD_REQUEST);
         return res
             .status(StatusCodes.BAD_REQUEST)
             .json(ErrorResponse);
