@@ -28,8 +28,12 @@ function validateCreateRequest(req, res, next) {
     if (!req.body.totalSeats) {
         validationErrors.push('totalSeats not found in incoming request in correct form');
     }
-    if (req.body.departureTime && req.body.arrivalTime) {
+    if (req.body.departureTime && req.body.arrivalTime && req.body.departureTime > req.body.arrivalTime) {
         validationErrors.push('departure time is greater than arrival time');
+    }
+
+    if(req.body.departureAirportId && req.body.arrivalAirportId && req.body.departureAirportId === req.body.arrivalAirportId) {
+        validationErrors.push('departure airportID cannot be same as arrival airportId');
     }
 
     if (validationErrors.length > 0) {
